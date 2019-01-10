@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.app.salesapp">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:name=".SalesApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <receiver android:name=".BootCompletedIntentReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.FetchAddressIntentService"
+            android:exported="false" />
+        <service
+            android:name=".Gps.LocationBackgroundService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".main.MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".attendance.createattendance.CreateAttendanceActivity"
+            android:label="@string/title_activity_create_attendance"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".salesreport.CreateSalesReportActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".feedback.FeedBackActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".feedback.SendFeedbackActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".distribution.createdistribution.CreateDistributionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".distribution.distributionlist.display.DisplayUpdateActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <!--
+             ATTENTION: This was auto-generated to add Google Play services to your project for
+            App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <service android:name=".fcm.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".fcm.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification_screen" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/biru" />
+
+        <activity android:name=".notification.DetailCommentActivity" />
+        <activity android:name=".inbound.InboundUpdateActivity" />
+        <activity android:name=".training.CreateTrainingActivity" />
+        <activity
+            android:name=".draft.DraftActivity"
+            android:label="Outbox"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".attendance.attendanceListActivity.AttendanceListActivity"
+            android:label="@string/title_activity_attendance_list"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".distribution.distributionListActivity.DistributionListActivity"
+            android:label="@string/title_activity_distribution_list"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".search.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".schedule.activity.ScheduleActivity"
+            android:label="@string/title_activity_schedule"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".training.activity.AudianceActivity"
+            android:label="@string/title_activity_audiance"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".training.activity.MaterialActivity"
+            android:label="@string/title_activity_material"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".training.list.TrainingListActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".distribution.activity.DistributionMaterialActivity"
+            android:label="@string/title_activity_material"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".salesreport.sellinglist.SellingListActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".inbound.InboundListActivity"
+            android:label="@string/title_activity_inbound_list"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".survey.SurveyActivity"
+            android:label="@string/survei_icon"
+            android:theme="@style/AppTheme" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="18f2427d05b85fb533f5e83d743ed7e951514944" />
+    </application>
+
+</manifest>

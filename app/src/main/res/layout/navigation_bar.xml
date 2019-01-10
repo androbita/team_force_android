@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="ContentDescription">
+
+    <data>
+
+        <variable
+            name="navPresenter"
+            type="com.app.salesapp.main.NavigationBarPresenter"/>
+
+        <import type="android.view.View"/>
+
+        <import type="com.app.salesapp.R"/>
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:clipToPadding="true"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/stripe_image" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:onClick="@{(view) -> navPresenter.goToHomePage()}"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:id="@+id/timelineIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/icon_home" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:onClick="@{(view) -> navPresenter.goToNotificationPage()}"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/notificationIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/icon_notif" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:onClick="@{(view) -> navPresenter.goToTimelinePage()}"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/newsFeedIcons"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/icon_newsfeed" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{(view) -> navPresenter.goToChartPage()}"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/chartIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/icon_dashboard" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/share"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/menu_border"
+                    android:onClick="@{(view) -> navPresenter.goToSharePage()}"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/shareIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_menu_share" />
+
+                    <TextView
+                        android:id="@+id/shareText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/share_icon"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/training"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/menu_border"
+                    android:onClick="@{(view) -> navPresenter.goToTrainingPage()}"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/trainingIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/icon_training" />
+
+                    <TextView
+                        android:id="@+id/trainingText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/training_icon"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/survey"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/menu_border"
+                    android:onClick="@{(view) -> navPresenter.goToSurveyPage()}"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/surveiIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/icon_survey" />
+
+                    <TextView
+                        android:id="@+id/surveiText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/survei_icon"
+                        android:textAlignment="center" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/received"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/menu_border"
+                    android:onClick="@{(view) -> navPresenter.goToReceivedListPage()}"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/receivedIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/icon_received" />
+
+                    <TextView
+                        android:id="@+id/receivedText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/received_icon"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/distribution"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/menu_border"
+                    android:onClick="@{(view) -> navPresenter.goToDistributionPage()}"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/distributionAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/icon_distribution" />
+
+                    <TextView
+                        android:id="@+id/distributionText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/distribution_icon"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/maintenance"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/menu_border"
+                    android:onClick="@{(view) -> navPresenter.goToMaintenancePage()}"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/mainTenanceAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/icon_maintenance" />
+
+                    <TextView
+                        android:id="@+id/mainTenanceText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/maintenance_icon"
+                        android:textAlignment="center" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/selling"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/menu_border"
+                    android:onClick="@{(view) -> navPresenter.goToSalesReportPage()}"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/sellingIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/icon_selling" />
+
+                    <TextView
+                        android:id="@+id/sellingText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/selling_icon"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sales_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/menu_border"
+                    android:onClick="@{(view) -> navPresenter.goToSalesReportPage()}"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/salesOrderIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/icon_sm_sales_order" />
+
+                    <TextView
+                        android:id="@+id/orderIconText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sell_order_icon"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/supply"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/menu_border"
+                    android:gravity="center_vertical"
+                    android:onClick="@{(view) -> navPresenter.goToChartPage()}"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/supplyAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/icon_supply" />
+
+                    <TextView
+                        android:id="@+id/supplyText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/supply_icon"
+                        android:textAlignment="center" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

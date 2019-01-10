@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="ContentDescription">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.app.salesapp.timeline.TimelinePresenter"/>
+
+        <variable
+            name="viewModel"
+            type="com.app.salesapp.timeline.TimelineViewModel"/>
+
+        <import type="android.view.View"/>
+
+        <import type="com.app.salesapp.R"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.app.salesapp.timeline.TimelineFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/timeline_pull_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_edittext"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="2dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="2dp"
+                        android:weightSum="7">
+
+                        <EditText
+                            android:id="@+id/search_bar"
+                            android:layout_width="0dp"
+                            android:layout_height="32dp"
+                            android:layout_weight="5"
+                            android:background="@color/putih"
+                            android:hint="Search"
+                            android:singleLine="true" />
+
+                        <Spinner
+                            android:id="@+id/searchBySpinner"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/abu2" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/list_timeline"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        />
+                </LinearLayout>
+
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.loadingVisibility}" />
+    </FrameLayout>
+</layout>

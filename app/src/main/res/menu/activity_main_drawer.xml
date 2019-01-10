@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_setting"
+        android:title="@string/settings"
+        android:visible="false" />
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_outbox"
+            android:enabled="true"
+            android:icon="@drawable/icon_sm_outbox"
+            app:actionViewClass="android.widget.TextView"
+            android:title="@string/outbox"
+            android:visible="true" />
+    </group>
+    <group
+        android:id="@+id/menu_ctr"
+        android:checkableBehavior="single">
+
+
+        <item
+            android:id="@+id/nav_visit_schedule"
+            android:icon="@drawable/icon_sm_schedule"
+            android:title="@string/visit_schedule"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/nav_attendance"
+            android:icon="@drawable/icon_sm_attendance"
+            android:title="@string/attendance_list" />
+
+        <item
+            android:id="@+id/nav_distribution_list"
+            android:icon="@drawable/icon_sm_distribution"
+            android:title="@string/distribution_list"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/nav_report"
+            android:icon="@drawable/icon_sm_selling"
+            android:title="@string/sales_report"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/nav_training"
+            android:icon="@drawable/icon_sm_training"
+            android:title="@string/training_list"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/nav_channel"
+            android:icon="@drawable/ic_channel_white"
+            android:title="@string/channel_list"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_timeline"
+            android:enabled="true"
+            android:icon="@drawable/ic_schedule_white"
+            android:title="@string/title_timeline"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/nav_inbound_list"
+            android:icon="@drawable/ic_distribution_white"
+            android:title="@string/inbound_list"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/home_page"
+            android:icon="@drawable/ic_distribution_white"
+            android:title="@string/inbound_list"
+            android:visible="false" />
+
+    </group>
+
+    <group
+        android:id="@+id/menu_btm"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/logout"
+            android:enabled="true"
+            android:icon="@drawable/logout"
+            android:title="@string/logout"
+            android:visible="true" />
+    </group>
+</menu>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0095d9</color>
+    <color name="colorPrimaryDark">#ff295de6</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="biru">#008dd2</color>
+    <color name="biru_muda"> #00A0E3</color>
+    <color name="abu2">#d9dada</color>
+    <color name="abu2_muda">#ebecec</color>
+    <color name="white">#ffffff</color>
+    <color name="abu2_agak_tua">#898989</color>
+    <color name="hitam">#2b2a29</color>
+    <color name="putih">#FEFEFE</color>
+    <color name="merah">#E31E24</color>
+    <color name="color_1">#7d7d7d</color>
+    <color name="color_2">#4B4B4B</color>
+    <color name="font_one">#7D7D7D</color>
+    <color name="font_two">#4B4B4B</color>
+
+    <color name="disable_forground_grey">#42221f1f</color>
+    <color name="disable_thumb_grey">#1c000000</color>
+    <color name="enable_thumb_green">#46bdbf</color>
+
+</resources>

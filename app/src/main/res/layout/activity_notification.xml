@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="ContentDescription">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.app.salesapp.notification.DetailCommentPresenter"/>
+
+        <variable
+            name="viewModel"
+            type="com.app.salesapp.timeline.adapter.TimelineItemViewModel"/>
+
+        <import type="android.view.View"/>
+
+        <import type="com.app.salesapp.R"/>
+    </data>
+
+        <RelativeLayout
+            android:id="@+id/activity_create_sales_report"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/abu2_muda"
+                android:orientation="vertical">
+
+                <include layout="@layout/toolbar_logo"/>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <RelativeLayout
+                    android:id="@+id/timeline_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <include
+                        android:id="@+id/timeline_detail"
+                        layout="@layout/timeline_item"
+                        app:viewModel="@{viewModel}"
+                        />
+                </RelativeLayout>
+                </ScrollView>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/progressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.5"
+                android:background="@android:color/black"
+                android:clickable="true"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+</layout>

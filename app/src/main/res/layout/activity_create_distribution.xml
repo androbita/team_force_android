@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    tools:context="com.app.salesapp.distribution.createdistribution.CreateDistributionActivity"
+    tools:ignore="ContentDescription">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.app.salesapp.distribution.createdistribution.CreateDistributionPresenter" />
+
+        <variable
+            name="viewModel"
+            type="com.app.salesapp.distribution.createdistribution.CreateDistributionViewModel" />
+
+        <import type="android.view.View" />
+
+        <import type="com.app.salesapp.R" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include android:id="@+id/layout_toolbar" layout="@layout/toolbar_title_and_send_logo"/>
+
+            <include
+                android:id="@+id/content_create_distribution"
+                layout="@layout/content_create_distribution"
+                app:viewModel="@{viewModel}" />
+
+        </android.support.design.widget.CoordinatorLayout>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,197 @@
+<resources>
+    <string name="app_name">Teamforce</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="new_channel">New Channel</string>
+    <string name="new_channel_code">Channel Code (Auto)</string>
+    <string name="new_channel_name">Channel Name*</string>
+    <string name="new_channel_city">City*</string>
+    <string name="new_channel_address">Address*</string>
+    <string name="hint_text_att">Toko Komputer Prima</string>
+    <string name="submit_btn">SUBMIT</string>
+    <string name="subject_txt">Subject</string>
+    <string name="add_attendace_desc">add_attendance</string>
+    <string name="add_pic_attendace_desc">add_picture_attendance</string>
+    <string name="action_settings">SETTINGS</string>
+    <string name="visit_schedule">Schedule</string>
+    <string name="attendance_list">Attendance</string>
+    <string name="inbound_list">INBOUND LIST</string>
+    <string name="distribution_list">Distribution</string>
+    <string name="training_list">Training</string>
+    <string name="sales_report">Selling</string>
+    <string name="channel_list">CHANNEL LIST</string>
+    <string name="settings">SETTINGS</string>
+    <string name="email">Email</string>
+    <string name="username_or_email">Username or Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">LOGIN</string>
+    <string name="outbox">Outbox</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="logout">Logout</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_attendance_list">Attendace</string>
+    <string name="title_current_activity">Current Activity</string>
+    <string name="title_sales_report">SALES REPORT</string>
+    <string name="title_distribution_list">Distribution</string>
+    <string name="title_training_list">TRAINING LIST</string>
+    <string name="title_schedule_list">DAILY VISIT SCHEDULE LIST</string>
+    <string name="title_timeline">NEWS FEED</string>
+    <string name="title_share_your_activity">Share your activity...</string>
+    <string name="title_activity_create_attendance">CreateAttendanceActivity</string>
+    <string name="title_create_attendance">CREATE ATTENDANCE</string>
+    <string name="title_distribution_report">DISTRIBUTION REPORT</string>
+    <string name="title_display_update">DISPLAY UPDATE</string>
+    <string name="label_channel_name">Channel Name</string>
+    <string name="label_material_name">Material Name</string>
+    <string name="label_activity">ACTIVITY</string>
+    <string name="label_remark">Remark</string>
+    <string name="label_displayed">Displayed</string>
+    <string name="label_active_used">Active Used</string>
+    <string name="label_nama_toko">Nama toko</string>
+    <string name="label_nama_barang">Nama barang</string>
+    <string name="label_quantity">QUANTITY</string>
+    <string name="label_aktifitas_kegiatan">Aktifitas / Kegiatan</string>
+    <string name="label_jumlah_barang">Jumlah barang</string>
+    <string name="label_keterangan">Keterangan</string>
+    <string name="label_terpasang">Terpasang</string>
+    <string name="label_aktif_gunakan">Aktif dan digunakan</string>
+    <string name="label_membuat_absensi_kehadiran">Membuat Absensi / Kehadiran</string>
+    <string name="label_distribusi_materi_pemasaran">Laporan Distribusi Materi Pemasaran</string>
+    <string name="label_perbaharui_status_barang_terpasang">Perbaharui status barang terpasang
+    </string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_create_salesReport">SELLING LIST</string>
+    <string name="label_laporan_penjualan">Laporan Penjualan</string>
+    <string name="label_trans_type">TRANS TYPE</string>
+    <string name="label_tipe_transaksi">Tipe Transaksi</string>
+    <string name="label_product_name">Product Name</string>
+    <string name="label_nama_produk">Nama Produk</string>
+
+    <string name="text_timeline_activities" formatted="false">%s</string>
+    <string name="text_timeline_date" formatted="false">%s</string>
+    <string name="text_comment_count" formatted="false">%s Comment</string>
+    <string name="text_comments_count" formatted="false">%s Comments</string>
+    <string name="min_10_karakter">Min 10 karakter</string>
+    <string name="invoice_number">INVOICE NUMBER</string>
+    <string name="nomor_invoice">Nomor Invoice</string>
+    <string name="tanggal_invoice">Tanggal Invoice</string>
+    <string name="invoice_date">INVOICE DATE</string>
+    <string name="quantity">Quantity</string>
+    <string name="jumlah_terjual">Jumlah terjual</string>
+    <string name="revenue">REVENUE</string>
+    <string name="nilai_harga">Nilai / Harga</string>
+    <string name="unique_code">UNIQUE CODE</string>
+    <string name="kode_barang">Kode Barang</string>
+    <string name="dokumentasi_penjualan">Dokumentasi Penjualan</string>
+    <string name="sales_photo">Sales Photo</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="hint_feedback">Write something here...</string>
+    <string name="feedback_store_update_status">FEEDBACK STORE / UPDATE STATUS</string>
+    <string name="tuliskan_saran_atau_status_toko">Tuliskan saran atau status toko</string>
+    <string name="draft_feedback">Draft Feedback</string>
+    <string name="title_announcement">Announcement</string>
+    <string name="title_pengumuman">Pengumuman</string>
+    <string name="title_inbound_list">Inbound List</string>
+    <string name="inbound_update">INBOUND UPDATE</string>
+    <string name="perbarui_data_barang_masuk">Perbarui data barang masuk</string>
+    <string name="label_nama_material">Nama Material</string>
+    <string name="outbound_qty">OUTBOUND QTY</string>
+    <string name="label_jumlah_barang_dikirim">Jumlah Barang Dikirim</string>
+    <string name="label_received_qty">RECEIVED QTY</string>
+    <string name="jumlah_barang_diterima">Jumlah Barang Diterima</string>
+    <string name="label_returner_qty">RETURNER QTY</string>
+    <string name="label_jumlah_barang_kembali">Jumlah Barang Kembali</string>
+    <string name="label_photo">Photo</string>
+    <string name="dokumentasi">Dokumentasi</string>
+    <string name="share_your_new_information">Share your new information</string>
+    <string name="msg_error_channel">Channel Harus Di pilih</string>
+    <string name="msg_error_subject">Subject harus di pilih !</string>
+    <string name="msg_error_trs_type">Transaction Type Harus di pilih !</string>
+    <string name="msg_error_product">Product Harus di pilih !</string>
+    <string name="create_training">CREATE TRAINING</string>
+    <string name="membuat_data_edukasi">Membuat data edukasi</string>
+    <string name="training_type">TRAINING TYPE</string>
+    <string name="jenis_edukasi">Jenis edukasi</string>
+    <string name="module">MODULE</string>
+    <string name="materi_edukasi">Materi edukasi</string>
+    <string name="label_audience_name">AUDIENCE NAME</string>
+    <string name="label_nama_audience">Nama peserta</string>
+    <string name="label_venue_name">VENUE NAME</string>
+    <string name="label_nama_tempat">Nama tempat</string>
+    <string name="label_of_audience"># OF AUDIENCE</string>
+    <string name="label_jumlah_peserta">Jumlah peserta</string>
+    <string name="captured_photo">CAPTURED PHOTO</string>
+    <string name="dokumentasi_yang_sudah_diambil">Dokumentasi yang sudah diambil</string>
+    <string name="list_audience">List Audience</string>
+    <string name="daftar_peserta">Daftar peserta</string>
+    <string name="pick_image_intent_text">Select Image</string>
+    <string name="pick_user_text">Select User :</string>
+
+    <string name="chart_attendace_title">Attendance</string>
+    <string name="chart_attendace_week">Week</string>
+
+    <string name="status_dashboard">Dashboard</string>
+    <string name="status_current_activity">Current Activity</string>
+    <string name="status_current_status">Your Status</string>
+    <string name="status_current_activity_label">Activity</string>
+    <string name="status_current_time_label">Time</string>
+    <string name="channel_status">Channel\'s Status</string>
+    <string name="channel_status_distribution">Distribution</string>
+    <string name="channel_status_training">Training</string>
+    <string name="channel_status_selling">Selling</string>
+
+    <string name="sort_chart_label">Summary view by: </string>
+    <string name="sort_chart_action_week">Weekly</string>
+    <string name="sort_chart_action_month">Monthly</string>
+
+    <string name="hi_message">Hi there!</string>
+    <string name="welcome_message">Welcome Back</string>
+    <string name="app_version">Version 1.4.0</string>
+    <string name="email_sample">achmad@teamforce.id</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="reset_password">Reset Password</string>
+
+    <string name="share_icon">Share</string>
+    <string name="training_icon">Training</string>
+    <string name="survei_icon">Survey</string>
+    <string name="received_icon">Received</string>
+    <string name="distribution_icon">Distribution</string>
+    <string name="maintenance_icon">Maintenace</string>
+    <string name="selling_icon">Selling</string>
+    <string name="sell_order_icon">Sales Order</string>
+    <string name="supply_icon">Supply</string>
+    <string name="title_activity_attendance_list">Attendance List</string>
+    <string name="title_activity_distribution_list">Distribution List</string>
+    <string name="title_activity_schedule">Schedule List</string>
+
+    <string name="disc_rep_place">You are at</string>
+    <string name="disc_rep_hint_mat">Please add the material</string>
+    <string name="version">Version</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="data_not_found">Data tidak ditemukan</string>
+    <string name="succes_add_channel">Success add Channel</string>
+    <string name="sampleText">Sample</string>
+    <string name="feed_back_location">You are at</string>
+    <string name="feed_back_location_sample">channel location</string>
+    <string name="feed_back_type">Type</string>
+    <string name="feed_back_image_btn_text">TAKE A PHOTO</string>
+
+    <string name="add_audiance">+ Add Audiance</string>
+    <string name="audiance">Audiance</string>
+    <string name="venue">Venue</string>
+    <string name="remark">Remark</string>
+    <string name="material">Material</string>
+    <string name="training_type_text">Training Type</string>
+    <string name="title_activity_material">SelectMaterial</string>
+    <string name="title_activity_audiance">Select Audiance</string>
+
+    <string name="msg_error_uniq_code">Uniqe Code Harus di isi !</string>
+    <string name="msg_error_quantity_not_number">Quantity Harus di isi dengan angka!</string>
+    <string name="title_activity_inbound_list">InboundListActivity</string>
+    <string name="send_survey">KIRIM SURVEY</string>
+</resources>

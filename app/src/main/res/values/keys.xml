@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="server_url" translatable="false">http://www.surfgold.co.id/loyalty/</string>
+    <string name="api_key" translatable="false">jMlMcPYpGYU2IZP4p8INZv1ypYjWY29jIF23yAyyh-yWZQZx9l</string>
+    <string name="okhttp_log_level" translatable="false">BODY</string>
+    <item name="sales_app_env" type="string" />
+</resources>

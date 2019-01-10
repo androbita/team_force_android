@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="ContentDescription">
+
+    <data>
+
+        <variable
+            name="navPresenter"
+            type="com.app.salesapp.main.NavigationBarPresenter" />
+
+        <variable
+            name="viewModel"
+            type="com.app.salesapp.main.MainViewModel"/>
+
+        <import type="android.view.View"/>
+
+        <import type="com.app.salesapp.R"/>
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context="com.app.salesapp.main.MainActivity">
+
+        <include android:id="@+id/layout_toolbar" layout="@layout/main_toolbar_logo"/>
+
+        <include
+            android:id="@+id/test"
+            layout="@layout/content_main"
+            app:navPresenter="@{navPresenter}"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>
