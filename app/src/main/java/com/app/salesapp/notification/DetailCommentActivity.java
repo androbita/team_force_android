@@ -66,7 +66,7 @@ public class DetailCommentActivity extends AppCompatActivity implements DetailCo
         ImageView logo = (ImageView)findViewById(R.id.app_logo);
         Glide.with(getApplicationContext()).load(userService.getUserLogo())
                 .error(R.drawable.sales_club_logo)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(logo);
         getDetailTimeline();
 
@@ -121,20 +121,20 @@ public class DetailCommentActivity extends AppCompatActivity implements DetailCo
                 .transform(new RoundedCornersTransformation(getApplicationContext(), 6, 0))
                 .placeholder(R.drawable.ic_profile_blue)
                 .error(R.drawable.ic_profile_blue)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.timelineDetail.imgUserTimeline);
 
         Glide.with(getApplicationContext()).load(temp.photoProfile)
                 .transform(new RoundedCornersTransformation(getApplicationContext(), 6, 0))
                 .placeholder(R.drawable.ic_profile_blue)
                 .error(R.drawable.ic_profile_blue)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.timelineDetail.layoutTimelineItemDetail.imgUserDetailTimeline);
 
         Glide.with(getApplicationContext()).load(temp.photo)
                 .placeholder(R.drawable.ic_camera)
                 .error(R.drawable.ic_camera)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.timelineDetail.imgDetailTimeline);
 
         viewModel.setCommentVisibility(true);

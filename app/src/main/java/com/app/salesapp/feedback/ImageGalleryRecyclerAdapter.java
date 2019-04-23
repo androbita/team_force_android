@@ -49,7 +49,6 @@ public class ImageGalleryRecyclerAdapter extends RecyclerView.Adapter<ImageGalle
 
         Glide.with(mContext).load(itemList.get(position))
                 .thumbnail(0.5f)
-                .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.imageView);
         

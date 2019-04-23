@@ -1,24 +1,52 @@
 package com.app.salesapp.survey.submit;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CustomFieldModel implements Serializable {
-    private String id;
-    private String value;
+    private List<String> customfieldid;
+    private List<String> fieldvalue;
+    private String programid;
+    private String token;
+    private String photo;
 
-    public String getId() {
-        return id;
+    public List<String> getCustomfieldid() {
+        return customfieldid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCustomfieldid(List<String> customfieldid) {
+        this.customfieldid = customfieldid;
     }
 
-    public String getValue() {
-        return value;
+    public List<String> getFieldvalue() {
+        return fieldvalue;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setFieldvalue(List<String> fieldvalue) {
+        this.fieldvalue = fieldvalue;
+    }
+
+    public String getProgramid() {
+        return programid;
+    }
+
+    public void setProgramid(String programid) {
+        this.programid = programid;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

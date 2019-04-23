@@ -23,6 +23,7 @@ public class SurveyPresenter {
     public static final String TEXT = "text";
     public static final String INT = "int";
     public static final String DROPDOWN = "dropdown";
+    public static final String IMAGE = "image";
     private SalesAppService salesAppService;
     private CompositeSubscription subscriptions;
     private SurveyContract contract;
@@ -39,7 +40,11 @@ public class SurveyPresenter {
         Subscription subscribe = salesAppService.getFormData(requestModel, new SalesAppService.ServiceCallback<Response<List<DataSurveyModel>>>() {
             @Override
             public void onSuccess(Response<List<DataSurveyModel>> response) {
-                contract.onSuccessGetFromData(response);
+                if (response.data != null && response.data.size() > 0) {
+                    contract.onSuccessGetFromData(response);
+                } else {
+                    contract.onShowErrorMessage("Tidak Ada Data");
+                }
             }
             @Override
             public void onError(NetworkError error) {
@@ -57,20 +62,22 @@ public class SurveyPresenter {
             if (TEXT.equalsIgnoreCase(dataSurveyModel.type)) {
                 contract.addTextView(dataSurveyModel.label, dataSurveyModel.customFieldId);
             } else if (INT.equalsIgnoreCase(dataSurveyModel.type)) {
-                contract.addTextView(dataSurveyModel.label, dataSurveyModel.customFieldId);
+                contract.addTextIntView(dataSurveyModel.label, dataSurveyModel.customFieldId);
             } else if (DROPDOWN.equalsIgnoreCase(dataSurveyModel.type)) {
                 if (dataSurveyModel.data != null && !dataSurveyModel.data.isEmpty()) {
                     contract.addDropDown(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
                 }
+            } else if (IMAGE.equalsIgnoreCase(dataSurveyModel.type)) {
+                contract.showPhotoButton();
             }
         }
     }
 
-    public void submitData(LinearLayout layoutForm) {
-        List<CustomFieldModel> customFieldModels = new ArrayList<>();
+    public void submitData(LinearLayout layoutForm, String photo) {
+        CustomFieldModel customFieldModels = new CustomFieldModel();
+        List<String> idList = new ArrayList<>();
+        List<String> valueList = new ArrayList<>();
         for (int i = 0; i < layoutForm.getChildCount(); i++) {
-            CustomFieldModel customFieldModel = new CustomFieldModel();
-
             String id = "";
             String value = "";
             if (layoutForm.getChildAt(i) instanceof TextInputLayout) {
@@ -85,22 +92,25 @@ public class SurveyPresenter {
             } else {
                 continue;
             }
-
-            customFieldModel.setId(id);
-            customFieldModel.setValue(value);
-            customFieldModels.add(customFieldModel);
+            idList.add(id);
+            valueList.add(value);
         }
 
-        SubmitSurveyRequestModel submitSurveyRequestModel = new SubmitSurveyRequestModel(customFieldModels, "67", "631");
-        salesAppService.postFormData(submitSurveyRequestModel, new SalesAppService.ServiceCallback() {
+        customFieldModels.setCustomfieldid(idList);
+        customFieldModels.setFieldvalue(valueList);
+        customFieldModels.setProgramid(contract.getProgramId());
+        customFieldModels.setToken(contract.getToken());
+        customFieldModels.setPhoto(photo);
+
+        salesAppService.postFormData(customFieldModels, new SalesAppService.ServiceCallback() {
             @Override
             public void onSuccess(Object response) {
-
+                contract.successSubmit();
             }
 
             @Override
             public void onError(NetworkError error) {
-
+                contract.errorSubmit(error.getMessage());
             }
         });
 

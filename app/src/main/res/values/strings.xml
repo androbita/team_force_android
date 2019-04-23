@@ -194,4 +194,5 @@
     <string name="msg_error_quantity_not_number">Quantity Harus di isi dengan angka!</string>
     <string name="title_activity_inbound_list">InboundListActivity</string>
     <string name="send_survey">KIRIM SURVEY</string>
+    <string name="success_submit">Berhasil Submit Data</string>
 </resources>

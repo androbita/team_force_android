@@ -55,6 +55,7 @@ import com.app.salesapp.search.model.SearchingRequestResponseModel;
 import com.app.salesapp.survey.DataSurveyModel;
 import com.app.salesapp.survey.SurveyRequestModel;
 import com.app.salesapp.survey.SurveyResponseModel;
+import com.app.salesapp.survey.submit.CustomFieldModel;
 import com.app.salesapp.survey.submit.SubmitSurveyRequestModel;
 import com.app.salesapp.timeline.comment.PostCommentRequest;
 import com.app.salesapp.timeline.model.TimelineRequest;
@@ -104,6 +105,7 @@ import static com.app.salesapp.SalesAppNetworkService.SalesAppApi.POST_DISPLAYED
 import static com.app.salesapp.SalesAppNetworkService.SalesAppApi.POST_DISTRIBUTION;
 import static com.app.salesapp.SalesAppNetworkService.SalesAppApi.POST_DISTRIBUTION_CHART;
 import static com.app.salesapp.SalesAppNetworkService.SalesAppApi.POST_FEEDBACK;
+import static com.app.salesapp.SalesAppNetworkService.SalesAppApi.POST_FORM_DATA;
 import static com.app.salesapp.SalesAppNetworkService.SalesAppApi.POST_LIST_SALES;
 import static com.app.salesapp.SalesAppNetworkService.SalesAppApi.POST_MAINTENANCE;
 import static com.app.salesapp.SalesAppNetworkService.SalesAppApi.POST_RECEIVED;
@@ -243,11 +245,11 @@ public interface SalesAppNetworkService {
     Observable<Response<TypeListResponseModel>> getTypeList(@Body ConfigRequestModel requestModel);
 
     @POST(GET_FORM_DATA)
-    Observable<Response<List<DataSurveyModel>>> getFormData(@Query("userid") String userId,
+    Observable<Response<List<DataSurveyModel>>> getFormData(@Query("token") String userId,
                                                             @Query("programid") String programId);
 
-    @POST(GET_FORM_DATA)
-    Observable<Response<List<Object>>> postFormData(@Body SubmitSurveyRequestModel submitSurveyRequestModel);
+    @POST(POST_FORM_DATA)
+    Observable<Response<List<Object>>> postFormData(@Body CustomFieldModel submitSurveyRequestModel);
 
     class SalesAppApi {
         public static final String LOGIN = "?r=Teamforce/base/postLogin";
@@ -294,7 +296,7 @@ public interface SalesAppNetworkService {
         public static final String LIST_DISTRIBUTION ="?r=Teamforce/maintenance/listDistribution";
         public static final String POST_MAINTENANCE = "?r=Teamforce/maintenance/postMaintenance";
         public static final String TYPE_LIST = "?r=Teamforce/base/listTypeShare";
-        public static final String GET_FORM_DATA = "?r=Teamforce/customField/getFormData&";
+        public static final String GET_FORM_DATA = "?r=Teamforce/customField/getFormData";
         public static final String POST_FORM_DATA = "?r=Teamforce/customField/submitPostData";
     }
 }

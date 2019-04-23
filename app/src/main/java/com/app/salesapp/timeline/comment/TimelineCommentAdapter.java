@@ -49,7 +49,7 @@ public class TimelineCommentAdapter extends RecyclerView.Adapter<TimelineComment
                 .transform(new RoundedCornersTransformation(context, 6, 0))
                 .placeholder(R.drawable.ic_profile_blue)
                 .error(R.drawable.ic_profile_blue)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(dataBinding.imgUserComment);
 
         dataBinding.setViewModel(viewModel);

@@ -111,7 +111,7 @@ public class CreateAttendanceActivity extends BaseActivity implements OnMapReady
         ImageView logo = (ImageView) findViewById(R.id.app_logo);
         Glide.with(getApplicationContext()).load(userService.getUserLogo())
                 .error(R.drawable.sales_club_logo)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(logo);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

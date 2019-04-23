@@ -38,8 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            app:srcCompat="@drawable/places_ic_search" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <LinearLayout
@@ -48,7 +47,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/cast_skip_ad_label_border"
         android:orientation="horizontal"
         android:padding="10dp">
 
@@ -71,7 +69,8 @@
             android:text="Quantity"
             android:textAlignment="viewEnd"
             android:textSize="14dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="end" />
 
         <TextView
             android:id="@+id/textView6"
@@ -81,7 +80,8 @@
             android:text="Action"
             android:textAlignment="viewEnd"
             android:textSize="14dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="end" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

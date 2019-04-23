@@ -67,20 +67,20 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
                 .transform(new RoundedCornersTransformation(context, 6, 0))
                 .placeholder(R.drawable.ic_profile_blue)
                 .error(R.drawable.ic_profile_blue)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(dataBinding.imgUserTimeline);
 
         Glide.with(context).load(timelineResponse.photoProfile)
                 .transform(new RoundedCornersTransformation(context, 6, 0))
                 .placeholder(R.drawable.ic_profile_blue)
                 .error(R.drawable.ic_profile_blue)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(dataBinding.layoutTimelineItemDetail.imgUserDetailTimeline);
 
         Glide.with(context).load(timelineResponse.photo)
                 .placeholder(R.drawable.place_holder)
                 .error(R.drawable.place_holder)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(dataBinding.imgDetailTimeline);
 
         dataBinding.textCommentCount.setOnClickListener(new View.OnClickListener() {

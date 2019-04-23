@@ -75,7 +75,7 @@ public class DistributionListAdapter extends RecyclerView.Adapter<DistributionLi
         Glide.with(context).load(distributionList.pictureAfter)
                 .placeholder(R.drawable.place_holder)
                 .error(R.drawable.place_holder)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(dataBinding.imagePhoto);
 
         dataBinding.setViewModel(viewModel);

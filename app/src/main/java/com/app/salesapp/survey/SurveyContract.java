@@ -13,4 +13,16 @@ public interface SurveyContract {
     void addTextView(String label, String customFieldId);
 
     void addDropDown(String label, String customFieldId, List<String> data);
+
+    void errorSubmit(String message);
+
+    void successSubmit();
+
+    String getProgramId();
+
+    String getToken();
+
+    void addTextIntView(String label, String customFieldId);
+
+    void showPhotoButton();
 }

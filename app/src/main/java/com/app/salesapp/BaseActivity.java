@@ -3,6 +3,7 @@ package com.app.salesapp;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,17 +22,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.app.salesapp.log.SalesAppLog;
+import com.app.salesapp.util.LoadingDialog;
 
 import static com.app.salesapp.common.SalesAppConstant.LOG_TAG;
 
 public abstract class BaseActivity extends OptimizedActivity {
 
     protected ActionBar action;
+    public LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        loadingDialog = new LoadingDialog(this);
         if (getSupportActionBar() != null)
             action = getSupportActionBar();
 

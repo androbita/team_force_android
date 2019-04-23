@@ -15,6 +15,8 @@
  */
 package com.app.salesapp.okHttp3LoggingInterceptor;
 
+import com.squareup.okhttp.internal.http.HttpEngine;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
@@ -30,8 +32,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okhttp3.internal.Platform;
-import okhttp3.internal.http.HttpEngine;
 import okio.Buffer;
 import okio.BufferedSource;
 
@@ -56,7 +56,7 @@ public final class OkHttp3LoggingInterceptor implements Interceptor {
         Logger DEFAULT = new Logger() {
             @Override
             public void log(String message) {
-                Platform.get().log(message);
+
             }
         };
     }
@@ -172,7 +172,7 @@ public final class OkHttp3LoggingInterceptor implements Interceptor {
             String contentTypeHeader = headers.get("Content-Type");
             if (contentTypeHeader != null && !contentTypeHeader.contains("text/") && !contentTypeHeader.contains("json")) {
                 logger.log("<-- END HTTP (non text content type)");
-            } else if (!logBody || !HttpEngine.hasBody(response)) {
+            } else if (!logBody) {
                 logger.log("<-- END HTTP (no body)");
             } else if (bodyEncoded(response.headers())) {
                 logger.log("<-- END HTTP (encoded body omitted)");

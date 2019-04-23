@@ -155,7 +155,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if(!userService.getUserLogo().equals("")){
             Glide.with(getApplicationContext()).load(userService.getUserLogo())
                     .error(R.drawable.sales_club_logo)
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.appBarMain.layoutToolbar.appLogo);
         }
         
@@ -192,7 +192,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         Glide.with(getApplicationContext()).load(userService.getUserLogo())
                 .error(R.drawable.sales_club_logo)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.appBarMain.layoutToolbar.appLogo);
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -466,7 +466,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void changeLogo(String logo) {
         Glide.with(getApplicationContext()).load(logo)
                 .error(R.drawable.sales_club_logo)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.appBarMain.layoutToolbar.appLogo);
     }
 

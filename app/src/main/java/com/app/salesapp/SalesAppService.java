@@ -55,6 +55,7 @@ import com.app.salesapp.search.model.SearchingRequestModel;
 import com.app.salesapp.search.model.SearchingRequestResponseModel;
 import com.app.salesapp.survey.DataSurveyModel;
 import com.app.salesapp.survey.SurveyRequestModel;
+import com.app.salesapp.survey.submit.CustomFieldModel;
 import com.app.salesapp.survey.submit.SubmitSurveyRequestModel;
 import com.app.salesapp.timeline.comment.PostCommentRequest;
 import com.app.salesapp.timeline.model.TimelineRequest;
@@ -1071,7 +1072,7 @@ public class SalesAppService {
 
                                @Override
                                public void onError(Throwable e) {
-                                    callback.onError(new NetworkError(e));
+                                   callback.onError(new NetworkError(e));
                                }
 
                                @Override
@@ -1205,8 +1206,7 @@ public class SalesAppService {
                 });
     }
 
-    public Subscription postFormData(final SubmitSurveyRequestModel requestModel, final ServiceCallback callback) {
-
+    public Subscription postFormData(final CustomFieldModel requestModel, final ServiceCallback callback) {
 
         return salesAppNetworkService.postFormData(requestModel)
                 .subscribeOn((Schedulers.io()))
