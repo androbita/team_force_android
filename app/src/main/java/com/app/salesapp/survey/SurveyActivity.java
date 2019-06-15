@@ -1,5 +1,6 @@
 package com.app.salesapp.survey;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,11 +12,14 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +47,14 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
     @Inject
     public UserService userService;
     private LinearLayout layoutForm;
+    private LinearLayout layoutSwitch;
     private Button buttonSubmit;
     private LinearLayout layoutPhoto;
     private Button btnPhoto;
     private ImageView picFrame;
     private ImageView resetImage;
+    private LinearLayout layoutHeaderSwitch;
+    private LinearLayout layoutContentSwitch;
 
     private String photos = "";
     private Camera camera;
@@ -180,6 +187,103 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         layoutForm.addView(textView);
         layoutForm.addView(spinner);
     }
+
+    @Override
+    public void addSwitch(final String label, final String customFieldId, final List<String> data) {
+
+        layoutHeaderSwitch = new LinearLayout(this);
+        layoutHeaderSwitch.setOrientation(LinearLayout.HORIZONTAL);
+        layoutHeaderSwitch.setPadding(0,20,0,0);
+
+        layoutContentSwitch = new LinearLayout(this);
+        layoutContentSwitch.setOrientation(LinearLayout.VERTICAL);
+
+        final TextView txt1 = new TextView(this);
+        txt1.setPadding(0,20,0,0);
+        txt1.setText(label);
+
+        final TextView txt2 = new TextView(this);
+        txt2.setPadding(0,20,0,0);
+
+        final Switch sw = new Switch(this);
+        LinearLayout.LayoutParams layoutParams =
+                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(100,0,0,0);
+        sw.setLayoutParams(layoutParams);
+        sw.setPadding(20,0,0,0);
+        sw.setId(Integer.parseInt(customFieldId));
+
+        layoutHeaderSwitch.addView(txt1);
+        layoutHeaderSwitch.addView(sw);
+        layoutForm.addView(layoutHeaderSwitch);
+//        layoutSwitch.addView(layoutContentSwitch);
+
+//        for (int i = 0; i < data.size(); i++){
+//            TextView txt = new TextView(this);
+//            txt.setPadding(0,20,0,0);
+
+        layoutForm.removeView(layoutContentSwitch);
+
+//            txt.setText(data.get(i));
+//            addDropDown(label, customFieldId, data);
+//            layoutContentSwitch.addView(txt);
+
+        layoutForm.addView(layoutContentSwitch);
+        layoutContentSwitch.setVisibility(View.GONE);
+
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked == true){
+                    Toast.makeText(SurveyActivity.this, "" + sw.getId(), Toast.LENGTH_SHORT).show();
+
+                    layoutContentSwitch.setVisibility(View.VISIBLE);
+                }else if (isChecked == false){
+//                    txt2.setText("");
+                    layoutContentSwitch.getContext();
+                    layoutContentSwitch.setVisibility(View.GONE);
+//                    layoutSwitch.removeView(layoutContentSwitch);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void addDropdownSwitch(String label, String customFieldId, List<String> data) {
+
+        TextView textView = new TextView(this);
+        textView.setPadding(0, 20, 0, 0);
+        textView.setText(label);
+        Spinner spinner = new Spinner(this);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, data);
+        spinner.setAdapter(spinnerArrayAdapter);
+        spinner.setId(Integer.parseInt(customFieldId));
+
+        layoutContentSwitch = new LinearLayout(this);
+        layoutContentSwitch.setOrientation(LinearLayout.VERTICAL);
+        layoutContentSwitch.setId(Integer.parseInt(customFieldId));
+        layoutContentSwitch.addView(textView);
+        layoutContentSwitch.addView(spinner);
+        layoutForm.addView(layoutContentSwitch);
+    }
+
+    @Override
+    public void addTextViewSwitch(String label, String customFieldId) {
+        TextInputLayout textInputLayout = new TextInputLayout(this);
+        TextInputEditText editText = new TextInputEditText(this);
+        editText.setId(Integer.parseInt(customFieldId));
+        textInputLayout.addView(editText);
+        TextView textView = new TextView(this);
+        textView.setPadding(0, 20, 0, 0);
+        textView.setText(label);
+//        layoutContentSwitch.removeView(textView);
+//        layoutContentSwitch.removeView(textInputLayout);
+        layoutContentSwitch.addView(textView);
+        layoutContentSwitch.addView(textInputLayout);
+        layoutForm.addView(layoutContentSwitch);
+    }
+
 
     @Override
     public void errorSubmit(String message) {

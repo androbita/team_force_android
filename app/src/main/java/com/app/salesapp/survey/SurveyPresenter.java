@@ -24,6 +24,9 @@ public class SurveyPresenter {
     public static final String INT = "int";
     public static final String DROPDOWN = "dropdown";
     public static final String IMAGE = "image";
+    public static final String SWITCH = "switch";
+    public static final String DROPDOWN_SWITCH = "dropdownswitch";
+    public static final String TEXT_SWITCH = "textswitch";
     private SalesAppService salesAppService;
     private CompositeSubscription subscriptions;
     private SurveyContract contract;
@@ -69,6 +72,12 @@ public class SurveyPresenter {
                 }
             } else if (IMAGE.equalsIgnoreCase(dataSurveyModel.type)) {
                 contract.showPhotoButton();
+            } else if (SWITCH.equalsIgnoreCase(dataSurveyModel.type)){
+                contract.addSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
+            }else if (DROPDOWN_SWITCH.equalsIgnoreCase(dataSurveyModel.type)){
+                contract.addDropdownSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
+            }else if (TEXT_SWITCH.equalsIgnoreCase(dataSurveyModel.type)){
+                contract.addTextViewSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId);
             }
         }
     }

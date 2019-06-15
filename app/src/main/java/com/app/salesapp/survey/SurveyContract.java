@@ -14,6 +14,12 @@ public interface SurveyContract {
 
     void addDropDown(String label, String customFieldId, List<String> data);
 
+    void addSwitch(String label, String customFieldId, List<String> data);
+
+    void addDropdownSwitch(String label, String customFieldId, List<String> data);
+
+    void addTextViewSwitch(String label, String customFieldId);
+
     void errorSubmit(String message);
 
     void successSubmit();
