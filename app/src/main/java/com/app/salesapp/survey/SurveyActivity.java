@@ -241,7 +241,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
                     layoutContentSwitch.setVisibility(View.VISIBLE);
                 }else if (isChecked == false){
 //                    txt2.setText("");
-                    layoutContentSwitch.getContext();
+//                    layoutContentSwitch.getContext();
                     layoutContentSwitch.setVisibility(View.GONE);
 //                    layoutSwitch.removeView(layoutContentSwitch);
                 }
