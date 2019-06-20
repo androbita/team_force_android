@@ -27,6 +27,8 @@ public class SurveyPresenter {
     public static final String SWITCH = "switch";
     public static final String DROPDOWN_SWITCH = "dropdownswitch";
     public static final String TEXT_SWITCH = "textswitch";
+    public static final String CHILD_OF = "";
+    public static final String VISIBLE = "1";
     private SalesAppService salesAppService;
     private CompositeSubscription subscriptions;
     private SurveyContract contract;
@@ -63,22 +65,40 @@ public class SurveyPresenter {
 
         for (DataSurveyModel dataSurveyModel: surveyForm) {
             if (TEXT.equalsIgnoreCase(dataSurveyModel.type)) {
-                contract.addTextView(dataSurveyModel.label, dataSurveyModel.customFieldId);
+                if (VISIBLE.equalsIgnoreCase(dataSurveyModel.visible)) {
+                    contract.addTextViewVisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
+                } else{
+                    contract.addTextViewInvisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.childOf);
+                }
             } else if (INT.equalsIgnoreCase(dataSurveyModel.type)) {
-                contract.addTextIntView(dataSurveyModel.label, dataSurveyModel.customFieldId);
+                if (VISIBLE.equalsIgnoreCase(dataSurveyModel.visible)){
+                    contract.addTextIntViewVisible(dataSurveyModel.label, dataSurveyModel.customFieldId);
+                }else {
+                    contract.addTextIntViewInvisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.childOf);
+                }
             } else if (DROPDOWN.equalsIgnoreCase(dataSurveyModel.type)) {
                 if (dataSurveyModel.data != null && !dataSurveyModel.data.isEmpty()) {
-                    contract.addDropDown(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
+                    if (VISIBLE.equalsIgnoreCase(dataSurveyModel.visible)) {
+                        if (dataSurveyModel.data.size() < 5) {
+                            contract.addDropDownVisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
+                        } else {
+                            contract.addTextViewVisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
+                        }
+                    } else {
+                            contract.addDropDownInvisible(dataSurveyModel.label, dataSurveyModel.customFieldId,
+                                    dataSurveyModel.data, dataSurveyModel.childOf);
+                    }
                 }
             } else if (IMAGE.equalsIgnoreCase(dataSurveyModel.type)) {
                 contract.showPhotoButton();
             } else if (SWITCH.equalsIgnoreCase(dataSurveyModel.type)){
                 contract.addSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
-            }else if (DROPDOWN_SWITCH.equalsIgnoreCase(dataSurveyModel.type)){
-                contract.addDropdownSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
-            }else if (TEXT_SWITCH.equalsIgnoreCase(dataSurveyModel.type)){
-                contract.addTextViewSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId);
             }
+//            else if (DROPDOWN_SWITCH.equalsIgnoreCase(dataSurveyModel.type)){
+//                contract.addDropdownSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
+//            }else if (TEXT_SWITCH.equalsIgnoreCase(dataSurveyModel.type)){
+//                contract.addTextViewSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId);
+//            }
         }
     }
 

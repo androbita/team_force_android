@@ -4,18 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -46,8 +53,8 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
 
     @Inject
     public UserService userService;
-    private LinearLayout layoutForm;
-    private LinearLayout layoutSwitch;
+    private LinearLayout layoutId;
+    private LinearLayout layoutAction;
     private Button buttonSubmit;
     private LinearLayout layoutPhoto;
     private Button btnPhoto;
@@ -62,6 +69,8 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AutoCompleteTextView atv;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
         ((SalesApp) getApplication()).getSalesAppDeps().inject(this);
@@ -70,7 +79,9 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         loadingDialog.show();
         surveyPresenter.getFromData(new SurveyRequestModel(userService.getUserPreference().token, userService.getCurrentProgram()));
 
-        layoutForm = findViewById(R.id.layout_form);
+        layoutId = findViewById(R.id.layout_identity);
+        layoutAction = findViewById(R.id.layout_action);
+
         buttonSubmit = findViewById(R.id.button_submit);
         layoutPhoto = findViewById(R.id.layout_photo);
         btnPhoto = findViewById(R.id.btnPhoto);
@@ -81,7 +92,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
             @Override
             public void onClick(View v) {
                 loadingDialog.show();
-                surveyPresenter.submitData(layoutForm, photos);
+                surveyPresenter.submitData(layoutId, photos);
             }
         });
 
@@ -163,20 +174,41 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
     }
 
     @Override
-    public void addTextView(String label, String customFieldId) {
+    public void addTextViewVisible(String label, String customFieldId, List<String> data) {
         TextInputLayout textInputLayout = new TextInputLayout(this);
         TextInputEditText editText = new TextInputEditText(this);
         editText.setId(Integer.parseInt(customFieldId));
+        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+        editText.setBackgroundColor(Color.parseColor("#EBECEC"));
         textInputLayout.addView(editText);
         TextView textView = new TextView(this);
         textView.setPadding(0, 20, 0, 0);
         textView.setText(label);
-        layoutForm.addView(textView);
-        layoutForm.addView(textInputLayout);
+        layoutId.addView(textView);
+        layoutId.addView(textInputLayout);
     }
 
     @Override
-    public void addDropDown(String label, String customFieldId, List<String> data) {
+    public void addTextViewInvisible(String label, String customFieldId, String childOf) {
+        TextInputLayout textInputLayout = new TextInputLayout(this);
+        final TextInputEditText editText = new TextInputEditText(this);
+        editText.setId(Integer.parseInt(customFieldId));
+        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+        editText.setBackgroundColor(Color.parseColor("#EBECEC"));
+
+        textInputLayout.addView(editText);
+        TextView textView = new TextView(this);
+        textView.setPadding(0, 20, 0, 0);
+        textView.setText(label);
+        textView.setId(Integer.parseInt(childOf));
+        layoutAction.addView(textView);
+        layoutAction.addView(textInputLayout);
+        textView.setVisibility(View.GONE);
+        textInputLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void addDropDownVisible(String label, String customFieldId, List<String> data) {
         TextView textView = new TextView(this);
         textView.setPadding(0, 20, 0, 0);
         textView.setText(label);
@@ -184,8 +216,24 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, data);
         spinner.setAdapter(spinnerArrayAdapter);
         spinner.setId(Integer.parseInt(customFieldId));
-        layoutForm.addView(textView);
-        layoutForm.addView(spinner);
+        layoutId.addView(textView);
+        layoutId.addView(spinner);
+    }
+
+    @Override
+    public void addDropDownInvisible(String label, String customFieldId, List<String> data, String childOf) {
+        TextView textView = new TextView(this);
+        textView.setPadding(0, 20, 0, 0);
+        textView.setText(label);
+        textView.setId(Integer.parseInt(childOf));
+        Spinner spinner = new Spinner(this);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, data);
+        spinner.setAdapter(spinnerArrayAdapter);
+        spinner.setId(Integer.parseInt(customFieldId));
+        layoutAction.addView(textView);
+        layoutAction.addView(spinner);
+//        textView.setVisibility(View.GONE);
+//        spinner.setVisibility(View.GONE);
     }
 
     @Override
@@ -206,7 +254,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         txt2.setPadding(0,20,0,0);
 
         final Switch sw = new Switch(this);
-        LinearLayout.LayoutParams layoutParams =
+        final LinearLayout.LayoutParams layoutParams =
                 new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(100,0,0,0);
         sw.setLayoutParams(layoutParams);
@@ -215,35 +263,84 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
 
         layoutHeaderSwitch.addView(txt1);
         layoutHeaderSwitch.addView(sw);
-        layoutForm.addView(layoutHeaderSwitch);
-//        layoutSwitch.addView(layoutContentSwitch);
+        layoutAction.addView(layoutHeaderSwitch);
 
-//        for (int i = 0; i < data.size(); i++){
-//            TextView txt = new TextView(this);
-//            txt.setPadding(0,20,0,0);
-
-        layoutForm.removeView(layoutContentSwitch);
-
-//            txt.setText(data.get(i));
-//            addDropDown(label, customFieldId, data);
-//            layoutContentSwitch.addView(txt);
-
-        layoutForm.addView(layoutContentSwitch);
-        layoutContentSwitch.setVisibility(View.GONE);
+//        layoutId.removeView(layoutContentSwitch);
+//
+//        layoutId.addView(layoutContentSwitch);
+//        layoutContentSwitch.setVisibility(View.GONE);
 
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked == true){
-                    Toast.makeText(SurveyActivity.this, "" + sw.getId(), Toast.LENGTH_SHORT).show();
+                    int fieldId = Integer.parseInt(customFieldId);
 
-                    layoutContentSwitch.setVisibility(View.VISIBLE);
+                    for (int i = 0; i < layoutAction.getChildCount(); i++){
+                        int id = layoutAction.getChildAt(i).getId();
+//                        TextView textView = (TextView) findViewById(layoutForm.getChildAt(i).getId());
+//                        textView.setId(Integer.parseInt(customFieldId));
+
+                        if (id == sw.getId()){
+                            if (layoutAction.getChildAt(i) instanceof TextView){
+                                i++;
+                                sw.setId(Integer.parseInt(customFieldId)+100+i);
+                                TextView textView = (TextView) findViewById(layoutAction.getChildAt(i+1).getId());
+                                Toast.makeText(SurveyActivity.this, ""+layoutAction.getChildAt(i+1).getId()+"."+i, Toast.LENGTH_SHORT).show();
+                                textView.setVisibility(View.VISIBLE);
+                            }else if (layoutAction.getChildAt(i) instanceof Spinner){
+                                i++;
+                                sw.setId(Integer.parseInt(customFieldId)+100+i);
+                                Spinner spinner = (Spinner) findViewById(layoutAction.getChildAt(i+1).getId());
+                                spinner.setVisibility(View.VISIBLE);
+                            }
+                        }else {
+                            if (layoutAction.getChildAt(i) instanceof TextView){
+//                                TextView textView = (TextView) findViewById(layoutForm.getChildAt(i).getId());
+//                                textView.setVisibility(View.VISIBLE);
+//                                Toast.makeText(SurveyActivity.this, ""+layoutForm.getChildAt(i).getId()+"."+i, Toast.LENGTH_SHORT).show();
+                            }else
+                            if (layoutAction.getChildAt(i) instanceof Spinner){
+                                Spinner spinner = (Spinner) findViewById(layoutAction.getChildAt(i).getId());
+                                spinner.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+                    sw.setId(Integer.parseInt(customFieldId));
                 }else if (isChecked == false){
-//                    txt2.setText("");
-//                    layoutContentSwitch.getContext();
-                    layoutContentSwitch.setVisibility(View.GONE);
-//                    layoutSwitch.removeView(layoutContentSwitch);
+                    TextView textView;
+                    for (int i = 0; i < layoutAction.getChildCount(); i++) {
+                        int id = layoutAction.getChildAt(i).getId();
+
+                        if (id == sw.getId()){
+
+                            if (layoutAction.getChildAt(i) instanceof TextView) {
+
+                                sw.setId(Integer.parseInt(customFieldId) + 1000+i);
+                                textView = (TextView) findViewById(layoutAction.getChildAt(i).getId());
+                                textView.setVisibility(View.GONE);
+                                textView.setId(Integer.parseInt(customFieldId) + 1000+i);
+//                                Spinner spinner = (Spinner) findViewById(layoutForm.getChildAt(i+1).getId());
+//                                spinner.setVisibility(View.GONE);
+                                sw.setId(Integer.parseInt(customFieldId));
+                            } else if (layoutAction.getChildAt(i) instanceof Spinner) {
+//                                Spinner spinner = (Spinner) findViewById(id);
+//                                spinner.setVisibility(View.GONE);
+                                Toast.makeText(SurveyActivity.this, "ini spinner", Toast.LENGTH_SHORT).show();
+                            }else if (layoutAction.getChildAt(i) instanceof Switch){
+                                Toast.makeText(SurveyActivity.this, "ini switch", Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(SurveyActivity.this, "tidak ketemu", Toast.LENGTH_SHORT).show();
+                                continue;
+                            }
+                        }else {
+                            if (layoutAction.getChildAt(i) instanceof Spinner){
+                                Spinner spinner = (Spinner) findViewById(layoutAction.getChildAt(i).getId());
+                                spinner.setVisibility(View.GONE);
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -265,7 +362,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         layoutContentSwitch.setId(Integer.parseInt(customFieldId));
         layoutContentSwitch.addView(textView);
         layoutContentSwitch.addView(spinner);
-        layoutForm.addView(layoutContentSwitch);
+        layoutAction.addView(layoutContentSwitch);
     }
 
     @Override
@@ -281,7 +378,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
 //        layoutContentSwitch.removeView(textInputLayout);
         layoutContentSwitch.addView(textView);
         layoutContentSwitch.addView(textInputLayout);
-        layoutForm.addView(layoutContentSwitch);
+        layoutAction.addView(layoutContentSwitch);
     }
 
 
@@ -310,7 +407,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
     }
 
     @Override
-    public void addTextIntView(String label, String customFieldId) {
+    public void addTextIntViewVisible(String label, String customFieldId) {
         TextInputLayout textInputLayout = new TextInputLayout(this);
         TextInputEditText editText = new TextInputEditText(this);
         editText.setId(Integer.parseInt(customFieldId));
@@ -319,8 +416,24 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         TextView textView = new TextView(this);
         textView.setPadding(0, 20, 0, 0);
         textView.setText(label);
-        layoutForm.addView(textView);
-        layoutForm.addView(textInputLayout);
+        layoutId.addView(textView);
+        layoutId.addView(textInputLayout);
+    }
+
+    @Override
+    public void addTextIntViewInvisible(String label, String customFieldId, String childOf) {
+        TextInputLayout textInputLayout = new TextInputLayout(this);
+        TextInputEditText editText = new TextInputEditText(this);
+        editText.setId(Integer.parseInt(customFieldId));
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        textInputLayout.addView(editText);
+        TextView textView = new TextView(this);
+        textView.setPadding(0, 20, 0, 0);
+        textView.setText(label);
+        layoutAction.addView(textView);
+        layoutAction.addView(textInputLayout);
+        textView.setVisibility(View.INVISIBLE);
+        textInputLayout.setVisibility(View.INVISIBLE);
     }
 
     @Override

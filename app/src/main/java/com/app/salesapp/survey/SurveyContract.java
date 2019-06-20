@@ -10,9 +10,13 @@ public interface SurveyContract {
 
     void onShowErrorMessage(String message);
 
-    void addTextView(String label, String customFieldId);
+    void addTextViewVisible(String label, String customFieldId, List<String> data);
 
-    void addDropDown(String label, String customFieldId, List<String> data);
+    void addTextViewInvisible (String label, String customFieldId, String childOf);
+
+    void addDropDownVisible(String label, String customFieldId, List<String> data);
+
+    void addDropDownInvisible (String label, String customFieldId, List<String> data, String childOf);
 
     void addSwitch(String label, String customFieldId, List<String> data);
 
@@ -28,7 +32,10 @@ public interface SurveyContract {
 
     String getToken();
 
-    void addTextIntView(String label, String customFieldId);
+    void addTextIntViewVisible(String label, String customFieldId);
+
+    void addTextIntViewInvisible (String label, String customFieldId, String childOf);
 
     void showPhotoButton();
+
 }

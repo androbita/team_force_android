@@ -11,5 +11,8 @@ public class DataSurveyModel implements Serializable {
     public String label;
     public String field;
     public String type;
+    @SerializedName("child_of")
+    public String childOf;
+    public String visible;
     public List<String> data;
 }
