@@ -1,5 +1,6 @@
 package com.app.salesapp.survey;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -39,6 +40,8 @@ import com.app.salesapp.user.UserService;
 import com.app.salesapp.util.Util;
 import com.mindorks.paracamera.Camera;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -53,14 +56,14 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
 
     @Inject
     public UserService userService;
-    private LinearLayout layoutId;
+    private LinearLayout layoutForm;
     private LinearLayout layoutAction;
+    private LinearLayout layoutUtama;
     private Button buttonSubmit;
     private LinearLayout layoutPhoto;
     private Button btnPhoto;
     private ImageView picFrame;
     private ImageView resetImage;
-    private LinearLayout layoutHeaderSwitch;
     private LinearLayout layoutContentSwitch;
 
     private String photos = "";
@@ -79,8 +82,8 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         loadingDialog.show();
         surveyPresenter.getFromData(new SurveyRequestModel(userService.getUserPreference().token, userService.getCurrentProgram()));
 
-        layoutId = findViewById(R.id.layout_identity);
-        layoutAction = findViewById(R.id.layout_action);
+        layoutUtama = findViewById(R.id.layout_utama);
+        layoutForm = findViewById(R.id.layout_form);
 
         buttonSubmit = findViewById(R.id.button_submit);
         layoutPhoto = findViewById(R.id.layout_photo);
@@ -92,7 +95,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
             @Override
             public void onClick(View v) {
                 loadingDialog.show();
-                surveyPresenter.submitData(layoutId, photos);
+                surveyPresenter.submitData(layoutForm, photos);
             }
         });
 
@@ -174,18 +177,53 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
     }
 
     @Override
-    public void addTextViewVisible(String label, String customFieldId, List<String> data) {
-        TextInputLayout textInputLayout = new TextInputLayout(this);
-        TextInputEditText editText = new TextInputEditText(this);
-        editText.setId(Integer.parseInt(customFieldId));
-        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-        editText.setBackgroundColor(Color.parseColor("#EBECEC"));
-        textInputLayout.addView(editText);
+    public void addLayout(String label, String customFieldId) {
+        LinearLayout.LayoutParams parameter = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        parameter.setMargins(0,20,0,20);
+        LinearLayout layout = new LinearLayout(this);
+        layout.setLayoutParams(parameter);
+        layout.setOrientation(LinearLayout.VERTICAL);
+//        layout.setPadding(20,20,0,0);
+        layout.setId(Integer.parseInt(customFieldId));
+        layout.setBackgroundColor(Color.parseColor("#FFFFFF"));
         TextView textView = new TextView(this);
-        textView.setPadding(0, 20, 0, 0);
         textView.setText(label);
-        layoutId.addView(textView);
-        layoutId.addView(textInputLayout);
+        textView.setTextSize(18);
+        textView.setTextColor(Color.parseColor("#FFFFFF"));
+        textView.setBackgroundColor(Color.parseColor("#ff295de6"));
+        textView.setPadding(0,20,0,20);
+        layout.addView(textView);
+        layoutForm.addView(layout);
+
+    }
+
+    @Override
+    public void addTextViewVisible(String label, String customFieldId, String childOf) {
+
+        for (int i = 0; i <= layoutForm.getChildCount(); i++) {
+            if (layoutForm.getChildAt(i) instanceof LinearLayout) {
+                if (Integer.parseInt(childOf) == layoutForm.getChildAt(i).getId()) {
+                    LinearLayout layout = (LinearLayout) layoutForm.getChildAt(i);
+
+                    TextInputLayout textInputLayout = new TextInputLayout(this);
+                    TextInputEditText editText = new TextInputEditText(this);
+                    editText.setId(Integer.parseInt(customFieldId));
+                    editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+//        editText.setBackgroundColor(Color.parseColor("#EBECEC"));
+                    textInputLayout.addView(editText);
+                    TextView textView = new TextView(this);
+                    textView.setPadding(0, 20, 0, 0);
+                    textView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    textView.setText(label);
+                    layout.addView(textView);
+                    layout.addView(textInputLayout);
+                }
+            }
+            else {
+                Toast.makeText(this, ""+i+" gagal", Toast.LENGTH_SHORT).show();
+                continue;
+            }
+        }
     }
 
     @Override
@@ -199,6 +237,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         textInputLayout.addView(editText);
         TextView textView = new TextView(this);
         textView.setPadding(0, 20, 0, 0);
+        textView.setBackgroundColor(Color.parseColor("#FFFFFF"));
         textView.setText(label);
         textView.setId(Integer.parseInt(childOf));
         layoutAction.addView(textView);
@@ -208,50 +247,74 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
     }
 
     @Override
-    public void addDropDownVisible(String label, String customFieldId, List<String> data) {
-        TextView textView = new TextView(this);
-        textView.setPadding(0, 20, 0, 0);
-        textView.setText(label);
-        Spinner spinner = new Spinner(this);
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, data);
-        spinner.setAdapter(spinnerArrayAdapter);
-        spinner.setId(Integer.parseInt(customFieldId));
-        layoutId.addView(textView);
-        layoutId.addView(spinner);
+    public void addDropDownVisible(String label, String customFieldId, List<String> data, String childOf) {
+
+        for (int i = 0; i<= layoutForm.getChildCount(); i++){
+            if (layoutForm.getChildAt(i) instanceof LinearLayout){
+                if (Integer.parseInt(childOf) == layoutForm.getChildAt(i).getId()) {
+    
+                    LinearLayout layout = (LinearLayout) layoutForm.getChildAt(i);
+    
+                    TextView textView = new TextView(this);
+                    textView.setPadding(0, 20, 0, 0);
+                    textView.setText(label);
+    //                textView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+    
+                    Spinner spinner = new Spinner(this);
+                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, data);
+                    spinner.setAdapter(spinnerArrayAdapter);
+                    spinner.setId(Integer.parseInt(customFieldId));
+                    layout.addView(textView);
+                    layout.addView(spinner);
+                }
+            }
+        }
     }
 
     @Override
     public void addDropDownInvisible(String label, String customFieldId, List<String> data, String childOf) {
-        TextView textView = new TextView(this);
-        textView.setPadding(0, 20, 0, 0);
-        textView.setText(label);
-        textView.setId(Integer.parseInt(childOf));
-        Spinner spinner = new Spinner(this);
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, data);
-        spinner.setAdapter(spinnerArrayAdapter);
-        spinner.setId(Integer.parseInt(customFieldId));
-        layoutAction.addView(textView);
-        layoutAction.addView(spinner);
-//        textView.setVisibility(View.GONE);
-//        spinner.setVisibility(View.GONE);
+
+        for (int i = 0; i < layoutForm.getChildCount(); i++){
+            if (layoutForm.getChildAt(i).getId() == Integer.parseInt(childOf)){
+                LinearLayout layout = (LinearLayout) layoutForm.getChildAt(i);
+
+                TextView textView = new TextView(this);
+                textView.setPadding(0, 20, 0, 0);
+                textView.setText(label);
+                textView.setId(Integer.parseInt(childOf));
+                Spinner spinner = new Spinner(this);
+                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, data);
+                spinner.setAdapter(spinnerArrayAdapter);
+
+                layout.addView(textView);
+                layout.addView(spinner);
+                textView.setVisibility(View.GONE);
+                spinner.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
-    public void addSwitch(final String label, final String customFieldId, final List<String> data) {
+    public void addSwitch(final String label, final String customFieldId, final List<String> data, String childOf) {
 
-        layoutHeaderSwitch = new LinearLayout(this);
+        LinearLayout.LayoutParams parameter = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        parameter.setMargins(0, 0, 0, 20);
+        LinearLayout layoutAllSwitch = new LinearLayout(this);
+        layoutAllSwitch.setLayoutParams(parameter);
+        layoutAllSwitch.setOrientation(LinearLayout.VERTICAL);
+        layoutAllSwitch.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+        LinearLayout layoutHeaderSwitch = new LinearLayout(this);
+        layoutHeaderSwitch.setLayoutParams(parameter);
         layoutHeaderSwitch.setOrientation(LinearLayout.HORIZONTAL);
-        layoutHeaderSwitch.setPadding(0,20,0,0);
+        layoutHeaderSwitch.setPadding(0,20,0,20);
+        layoutHeaderSwitch.setBackgroundColor(Color.parseColor("#ff295de6"));
 
-        layoutContentSwitch = new LinearLayout(this);
-        layoutContentSwitch.setOrientation(LinearLayout.VERTICAL);
-
-        final TextView txt1 = new TextView(this);
-        txt1.setPadding(0,20,0,0);
-        txt1.setText(label);
-
-        final TextView txt2 = new TextView(this);
-        txt2.setPadding(0,20,0,0);
+        final TextView textView = new TextView(this);
+        textView.setPadding(0,20,0,0);
+        textView.setText(label);
+        textView.setTextColor(Color.parseColor("#FFFFFF"));
+        textView.setTextSize(15);
 
         final Switch sw = new Switch(this);
         final LinearLayout.LayoutParams layoutParams =
@@ -259,110 +322,100 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         layoutParams.setMargins(100,0,0,0);
         sw.setLayoutParams(layoutParams);
         sw.setPadding(20,0,0,0);
-        sw.setId(Integer.parseInt(customFieldId));
 
-        layoutHeaderSwitch.addView(txt1);
+
+        layoutHeaderSwitch.addView(textView);
         layoutHeaderSwitch.addView(sw);
-        layoutAction.addView(layoutHeaderSwitch);
+        layoutAllSwitch.setId(Integer.parseInt(customFieldId));
+        layoutAllSwitch.addView(layoutHeaderSwitch);
+        layoutForm.addView(layoutAllSwitch);
 
-//        layoutId.removeView(layoutContentSwitch);
-//
-//        layoutId.addView(layoutContentSwitch);
-//        layoutContentSwitch.setVisibility(View.GONE);
+        final int customId = Integer.parseInt(customFieldId)+1000;
 
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int idLayout = 0;
+                LinearLayout layout = null;
 
-                if (isChecked == true){
-                    int fieldId = Integer.parseInt(customFieldId);
 
-                    for (int i = 0; i < layoutAction.getChildCount(); i++){
-                        int id = layoutAction.getChildAt(i).getId();
-//                        TextView textView = (TextView) findViewById(layoutForm.getChildAt(i).getId());
-//                        textView.setId(Integer.parseInt(customFieldId));
+                for (int i = 0; i <= layoutForm.getChildCount(); i++) {
+                    if (layoutForm.getChildAt(i) instanceof LinearLayout) {
+                        idLayout = layoutForm.getChildAt(i).getId();
+                        idLayout += 1000 + i;
 
-                        if (id == sw.getId()){
-                            if (layoutAction.getChildAt(i) instanceof TextView){
-                                i++;
-                                sw.setId(Integer.parseInt(customFieldId)+100+i);
-                                TextView textView = (TextView) findViewById(layoutAction.getChildAt(i+1).getId());
-                                Toast.makeText(SurveyActivity.this, ""+layoutAction.getChildAt(i+1).getId()+"."+i, Toast.LENGTH_SHORT).show();
-                                textView.setVisibility(View.VISIBLE);
-                            }else if (layoutAction.getChildAt(i) instanceof Spinner){
-                                i++;
-                                sw.setId(Integer.parseInt(customFieldId)+100+i);
-                                Spinner spinner = (Spinner) findViewById(layoutAction.getChildAt(i+1).getId());
-                                spinner.setVisibility(View.VISIBLE);
+                        int idSwitch = Integer.parseInt(customFieldId);
+                        idSwitch += 1000 + i;
+                        sw.setId(idSwitch);
+
+
+                    if (isChecked == true) {
+                        if (idLayout == sw.getId()) {
+                            layout = (LinearLayout) layoutForm.getChildAt(i);
+                            for (int a = 0; a <= layout.getChildCount(); a++) {
+                                if (layout.getChildAt(a) instanceof TextView) {
+                                    TextView textView1 = (TextView) layout.getChildAt(a);
+                                    String text = textView1.getText().toString();
+
+                                    textView1.setVisibility(View.VISIBLE);
+                                } else if (layout.getChildAt(a) instanceof Spinner) {
+                                    Spinner spinner = (Spinner) layout.getChildAt(a);
+                                    String text = spinner.getSelectedItem().toString();
+
+                                    spinner.setVisibility(View.VISIBLE);
+                                }
                             }
-                        }else {
-                            if (layoutAction.getChildAt(i) instanceof TextView){
-//                                TextView textView = (TextView) findViewById(layoutForm.getChildAt(i).getId());
-//                                textView.setVisibility(View.VISIBLE);
-//                                Toast.makeText(SurveyActivity.this, ""+layoutForm.getChildAt(i).getId()+"."+i, Toast.LENGTH_SHORT).show();
-                            }else
-                            if (layoutAction.getChildAt(i) instanceof Spinner){
-                                Spinner spinner = (Spinner) findViewById(layoutAction.getChildAt(i).getId());
-                                spinner.setVisibility(View.VISIBLE);
+                        } else {
+                            continue;
+                        }
+                    } else if (isChecked == false) {
+                        if (idLayout == sw.getId()) {
+                            layout = (LinearLayout) layoutForm.getChildAt(i);
+                            for (int a = 0; a <= layout.getChildCount(); a++) {
+                                if (layout.getChildAt(a) instanceof TextView) {
+                                    TextView textView1 = (TextView) layout.getChildAt(a);
+                                    String text = textView1.getText().toString();
+
+                                    textView1.setVisibility(View.GONE);
+                                } else if (layout.getChildAt(a) instanceof Spinner) {
+                                    Spinner spinner = (Spinner) layout.getChildAt(a);
+                                    String text = spinner.getSelectedItem().toString();
+
+                                    spinner.setVisibility(View.GONE);
+                                }
                             }
                         }
                     }
-                    sw.setId(Integer.parseInt(customFieldId));
-                }else if (isChecked == false){
-                    TextView textView;
-                    for (int i = 0; i < layoutAction.getChildCount(); i++) {
-                        int id = layoutAction.getChildAt(i).getId();
-
-                        if (id == sw.getId()){
-
-                            if (layoutAction.getChildAt(i) instanceof TextView) {
-
-                                sw.setId(Integer.parseInt(customFieldId) + 1000+i);
-                                textView = (TextView) findViewById(layoutAction.getChildAt(i).getId());
-                                textView.setVisibility(View.GONE);
-                                textView.setId(Integer.parseInt(customFieldId) + 1000+i);
-//                                Spinner spinner = (Spinner) findViewById(layoutForm.getChildAt(i+1).getId());
-//                                spinner.setVisibility(View.GONE);
-                                sw.setId(Integer.parseInt(customFieldId));
-                            } else if (layoutAction.getChildAt(i) instanceof Spinner) {
-//                                Spinner spinner = (Spinner) findViewById(id);
-//                                spinner.setVisibility(View.GONE);
-                                Toast.makeText(SurveyActivity.this, "ini spinner", Toast.LENGTH_SHORT).show();
-                            }else if (layoutAction.getChildAt(i) instanceof Switch){
-                                Toast.makeText(SurveyActivity.this, "ini switch", Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(SurveyActivity.this, "tidak ketemu", Toast.LENGTH_SHORT).show();
-                                continue;
-                            }
-                        }else {
-                            if (layoutAction.getChildAt(i) instanceof Spinner){
-                                Spinner spinner = (Spinner) findViewById(layoutAction.getChildAt(i).getId());
-                                spinner.setVisibility(View.GONE);
-                            }
-                        }
-                    }
+                }
                 }
             }
         });
     }
 
     @Override
-    public void addDropdownSwitch(String label, String customFieldId, List<String> data) {
+    public void addDropdownSuggestion(String label, String customFieldId, List<String> data, String childOf) {
+        for (int i = 0; i <= layoutForm.getChildCount(); i++) {
+            if (layoutForm.getChildAt(i) instanceof LinearLayout) {
+                if (Integer.parseInt(childOf) == layoutForm.getChildAt(i).getId()) {
+                    LinearLayout layout = (LinearLayout) layoutForm.getChildAt(i);
 
-        TextView textView = new TextView(this);
-        textView.setPadding(0, 20, 0, 0);
-        textView.setText(label);
-        Spinner spinner = new Spinner(this);
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, data);
-        spinner.setAdapter(spinnerArrayAdapter);
-        spinner.setId(Integer.parseInt(customFieldId));
+                    TextView textView = new TextView(this);
+                    textView.setPadding(0, 20, 0, 0);
+                    textView.setText(label);
+                    textView.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-        layoutContentSwitch = new LinearLayout(this);
-        layoutContentSwitch.setOrientation(LinearLayout.VERTICAL);
-        layoutContentSwitch.setId(Integer.parseInt(customFieldId));
-        layoutContentSwitch.addView(textView);
-        layoutContentSwitch.addView(spinner);
-        layoutAction.addView(layoutContentSwitch);
+                    AutoCompleteTextView atv = new AutoCompleteTextView(this);
+                    ArrayAdapter<String> atvArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
+                    atv.setAdapter(atvArrayAdapter);
+                    atv.setId(Integer.parseInt(customFieldId));
+
+                    layout.addView(textView);
+                    layout.addView(atv);
+                } else {
+                    continue;
+                }
+            }
+        }
     }
 
     @Override
@@ -374,8 +427,6 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         TextView textView = new TextView(this);
         textView.setPadding(0, 20, 0, 0);
         textView.setText(label);
-//        layoutContentSwitch.removeView(textView);
-//        layoutContentSwitch.removeView(textInputLayout);
         layoutContentSwitch.addView(textView);
         layoutContentSwitch.addView(textInputLayout);
         layoutAction.addView(layoutContentSwitch);
@@ -407,7 +458,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
     }
 
     @Override
-    public void addTextIntViewVisible(String label, String customFieldId) {
+    public void addTextIntViewVisible(String label, String customFieldId, String childOf) {
         TextInputLayout textInputLayout = new TextInputLayout(this);
         TextInputEditText editText = new TextInputEditText(this);
         editText.setId(Integer.parseInt(customFieldId));
@@ -416,8 +467,8 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         TextView textView = new TextView(this);
         textView.setPadding(0, 20, 0, 0);
         textView.setText(label);
-        layoutId.addView(textView);
-        layoutId.addView(textInputLayout);
+        layoutForm.addView(textView);
+        layoutForm.addView(textInputLayout);
     }
 
     @Override

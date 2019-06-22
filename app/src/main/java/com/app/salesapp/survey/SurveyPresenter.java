@@ -2,9 +2,11 @@ package com.app.salesapp.survey;
 
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.text.Layout;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.app.salesapp.SalesAppService;
@@ -25,7 +27,8 @@ public class SurveyPresenter {
     public static final String DROPDOWN = "dropdown";
     public static final String IMAGE = "image";
     public static final String SWITCH = "switch";
-    public static final String DROPDOWN_SWITCH = "dropdownswitch";
+    public static final String DROPDOWN_SUGGESTION = "dropdownSUGGESTION";
+    public static final String LAYOUT = "layout";
     public static final String TEXT_SWITCH = "textswitch";
     public static final String CHILD_OF = "";
     public static final String VISIBLE = "1";
@@ -64,41 +67,41 @@ public class SurveyPresenter {
         this.surveyForm = surveyForm;
 
         for (DataSurveyModel dataSurveyModel: surveyForm) {
-            if (TEXT.equalsIgnoreCase(dataSurveyModel.type)) {
-                if (VISIBLE.equalsIgnoreCase(dataSurveyModel.visible)) {
-                    contract.addTextViewVisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
-                } else{
-                    contract.addTextViewInvisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.childOf);
-                }
-            } else if (INT.equalsIgnoreCase(dataSurveyModel.type)) {
-                if (VISIBLE.equalsIgnoreCase(dataSurveyModel.visible)){
-                    contract.addTextIntViewVisible(dataSurveyModel.label, dataSurveyModel.customFieldId);
-                }else {
-                    contract.addTextIntViewInvisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.childOf);
-                }
+            if (LAYOUT.equalsIgnoreCase(dataSurveyModel.type)){
+                contract.addLayout(dataSurveyModel.label, dataSurveyModel.customFieldId);
+//            } else if (TEXT.equalsIgnoreCase(dataSurveyModel.type)) {
+//                if (VISIBLE.equalsIgnoreCase(dataSurveyModel.visible)) {
+//                    contract.addTextViewVisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.childOf);
+//                } else{
+//                    contract.addTextViewInvisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.childOf);
+//                }
+//            } else if (INT.equalsIgnoreCase(dataSurveyModel.type)) {
+//                if (VISIBLE.equalsIgnoreCase(dataSurveyModel.visible)){
+//                    contract.addTextIntViewVisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.childOf);
+//                }else {
+//                    contract.addTextIntViewInvisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.childOf);
+//                }
             } else if (DROPDOWN.equalsIgnoreCase(dataSurveyModel.type)) {
                 if (dataSurveyModel.data != null && !dataSurveyModel.data.isEmpty()) {
                     if (VISIBLE.equalsIgnoreCase(dataSurveyModel.visible)) {
-                        if (dataSurveyModel.data.size() < 5) {
-                            contract.addDropDownVisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
-                        } else {
-                            contract.addTextViewVisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
-                        }
+                            contract.addDropDownVisible(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data, dataSurveyModel.childOf);
                     } else {
                             contract.addDropDownInvisible(dataSurveyModel.label, dataSurveyModel.customFieldId,
                                     dataSurveyModel.data, dataSurveyModel.childOf);
                     }
                 }
+            } else if (DROPDOWN_SUGGESTION.equalsIgnoreCase(dataSurveyModel.type)){
+                contract.addDropdownSuggestion(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data, dataSurveyModel.childOf);
             } else if (IMAGE.equalsIgnoreCase(dataSurveyModel.type)) {
                 contract.showPhotoButton();
             } else if (SWITCH.equalsIgnoreCase(dataSurveyModel.type)){
-                contract.addSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
-            }
+                contract.addSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data, dataSurveyModel.childOf);
+//            }
 //            else if (DROPDOWN_SWITCH.equalsIgnoreCase(dataSurveyModel.type)){
 //                contract.addDropdownSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId, dataSurveyModel.data);
 //            }else if (TEXT_SWITCH.equalsIgnoreCase(dataSurveyModel.type)){
 //                contract.addTextViewSwitch(dataSurveyModel.label, dataSurveyModel.customFieldId);
-//            }
+            }
         }
     }
 
@@ -109,7 +112,12 @@ public class SurveyPresenter {
         for (int i = 0; i < layoutForm.getChildCount(); i++) {
             String id = "";
             String value = "";
-            if (layoutForm.getChildAt(i) instanceof TextInputLayout) {
+            if (layoutForm.getChildAt(i) instanceof LinearLayout){
+                id = String.valueOf(layoutForm.getChildAt(i).getId());
+                value = "layout";
+            } else if (layoutForm.getChildAt(i) instanceof Switch){
+                id = String.valueOf(layoutForm.getChildAt(i).getId());
+            } else if (layoutForm.getChildAt(i) instanceof TextInputLayout) {
                 FrameLayout frameLayout = (FrameLayout) ((TextInputLayout) layoutForm.getChildAt(i)).getChildAt(0);
                 TextInputEditText textInputEditText = (TextInputEditText) frameLayout.getChildAt(0);
 
