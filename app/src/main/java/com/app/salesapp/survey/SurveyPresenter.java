@@ -149,7 +149,7 @@ public class SurveyPresenter {
             for (int a = 0; a <= layout.getChildCount(); a++){
                 String idChild = "";
                 String valueChild = "";
-                boolean isChecked = false;
+                String baseValueChild = "Pilih";
                 LinearLayout layout1;
 
                 if (layout.getChildAt(a) instanceof AutoCompleteTextView){
@@ -158,7 +158,11 @@ public class SurveyPresenter {
                     valueChild = String.valueOf(atv.getText());
                 } else if (layout.getChildAt(a) instanceof Spinner){
                     idChild = String.valueOf(layout.getChildAt(a).getId());
-                    valueChild = ((Spinner) layout.getChildAt(a)).getSelectedItem().toString();
+                    if (((Spinner) layout.getChildAt(a)).getSelectedItem().toString().equalsIgnoreCase(baseValueChild)){
+                        valueChild = "<NONE>";
+                    } else {
+                        valueChild = ((Spinner) layout.getChildAt(a)).getSelectedItem().toString();
+                    }
                 } else if (layout.getChildAt(a) instanceof Switch){
                     idChild = String.valueOf(layout.getChildAt(a).getId());
                     valueChild = "<NONE>";

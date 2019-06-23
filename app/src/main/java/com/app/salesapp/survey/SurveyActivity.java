@@ -38,6 +38,8 @@ import com.app.salesapp.SalesAppService;
 import com.app.salesapp.network.Response;
 import com.app.salesapp.user.UserService;
 import com.app.salesapp.util.Util;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mindorks.paracamera.Camera;
 
 import org.w3c.dom.Text;
@@ -59,11 +61,13 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
     private LinearLayout layoutForm;
     private LinearLayout layoutAction;
     private LinearLayout layoutUtama;
+    private LinearLayout layoutLogo;
     private Button buttonSubmit;
     private LinearLayout layoutPhoto;
     private Button btnPhoto;
     private ImageView picFrame;
     private ImageView resetImage;
+    private ImageView imageLogo;
     private LinearLayout layoutContentSwitch;
 
     private String photos = "";
@@ -84,12 +88,14 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
 
         layoutUtama = findViewById(R.id.layout_utama);
         layoutForm = findViewById(R.id.layout_form);
+        layoutLogo = findViewById(R.id.layout_logo);
 
         buttonSubmit = findViewById(R.id.button_submit);
         layoutPhoto = findViewById(R.id.layout_photo);
         btnPhoto = findViewById(R.id.btnPhoto);
         resetImage = findViewById(R.id.resetImage);
         picFrame = findViewById(R.id.pic_frame);
+        imageLogo = findViewById(R.id.logo_survey);
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +114,13 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         getSupportActionBar().setTitle("Survey");
         final Drawable upArrow = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_keyboard_arrow_left_36dp, null);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+        if(!userService.getUserLogo().equals("")){
+            Glide.with(getApplicationContext()).load(userService.getUserLogo())
+                    .error(R.drawable.sales_club_logo)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageLogo);
+        }
 
         resetImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,7 +192,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
     @Override
     public void addLayout(String label, String customFieldId) {
         LinearLayout.LayoutParams parameter = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        parameter.setMargins(0,20,0,20);
+        parameter.setMargins(0,0,0,20);
         LinearLayout layout = new LinearLayout(this);
         layout.setLayoutParams(parameter);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -209,7 +222,6 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
                     TextInputEditText editText = new TextInputEditText(this);
                     editText.setId(Integer.parseInt(customFieldId));
                     editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-//        editText.setBackgroundColor(Color.parseColor("#EBECEC"));
                     textInputLayout.addView(editText);
                     TextView textView = new TextView(this);
                     textView.setPadding(0, 20, 0, 0);
@@ -248,6 +260,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
 
     @Override
     public void addDropDownVisible(String label, String customFieldId, List<String> data, String childOf) {
+        boolean layoutExist = true;
 
         for (int i = 0; i<= layoutForm.getChildCount(); i++){
             if (layoutForm.getChildAt(i) instanceof LinearLayout){
@@ -258,16 +271,11 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
                     TextView textView = new TextView(this);
                     textView.setPadding(20, 20, 20, 0);
                     textView.setText(label);
-    //                textView.setBackgroundColor(Color.parseColor("#FFFFFF"));
     
                     Spinner spinner = new Spinner(this);
                     ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, data);
                     spinner.setAdapter(spinnerArrayAdapter);
                     spinner.setId(Integer.parseInt(customFieldId));
-
-//                    String pilih = "Silahkan Pilih";
-//                    int spinnerPosition = spinnerArrayAdapter.getPosition(pilih);
-//                    spinner.setSelection(spinnerPosition);
 
                     layout.addView(textView);
                     layout.addView(spinner);
