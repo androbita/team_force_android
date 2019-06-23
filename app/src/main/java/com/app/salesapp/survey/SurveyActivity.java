@@ -256,7 +256,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
                     LinearLayout layout = (LinearLayout) layoutForm.getChildAt(i);
     
                     TextView textView = new TextView(this);
-                    textView.setPadding(0, 20, 0, 0);
+                    textView.setPadding(20, 20, 20, 0);
                     textView.setText(label);
     //                textView.setBackgroundColor(Color.parseColor("#FFFFFF"));
     
@@ -264,6 +264,11 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
                     ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, data);
                     spinner.setAdapter(spinnerArrayAdapter);
                     spinner.setId(Integer.parseInt(customFieldId));
+
+//                    String pilih = "Silahkan Pilih";
+//                    int spinnerPosition = spinnerArrayAdapter.getPosition(pilih);
+//                    spinner.setSelection(spinnerPosition);
+
                     layout.addView(textView);
                     layout.addView(spinner);
                 }
@@ -279,12 +284,16 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
                 LinearLayout layout = (LinearLayout) layoutForm.getChildAt(i);
 
                 TextView textView = new TextView(this);
-                textView.setPadding(0, 20, 0, 0);
+                textView.setPadding(20, 20, 20, 0);
                 textView.setText(label);
                 textView.setId(Integer.parseInt(childOf));
+
                 Spinner spinner = new Spinner(this);
                 ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, data);
                 spinner.setAdapter(spinnerArrayAdapter);
+                spinner.setId(Integer.parseInt(customFieldId));
+
+
 
                 layout.addView(textView);
                 layout.addView(spinner);
@@ -362,6 +371,7 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
                                     Spinner spinner = (Spinner) layout.getChildAt(a);
                                     String text = spinner.getSelectedItem().toString();
 
+//                                    spinner.removeViewAt(0);
                                     spinner.setVisibility(View.VISIBLE);
                                 }
                             }
@@ -381,7 +391,9 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
                                     Spinner spinner = (Spinner) layout.getChildAt(a);
                                     String text = spinner.getSelectedItem().toString();
 
+                                    spinner.setSelection(0);
                                     spinner.setVisibility(View.GONE);
+
                                 }
                             }
                         }
@@ -397,10 +409,12 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         for (int i = 0; i <= layoutForm.getChildCount(); i++) {
             if (layoutForm.getChildAt(i) instanceof LinearLayout) {
                 if (Integer.parseInt(childOf) == layoutForm.getChildAt(i).getId()) {
+
+
                     LinearLayout layout = (LinearLayout) layoutForm.getChildAt(i);
 
                     TextView textView = new TextView(this);
-                    textView.setPadding(0, 20, 0, 0);
+                    textView.setPadding(20, 20, 20, 20);
                     textView.setText(label);
                     textView.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
@@ -408,6 +422,8 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
                     ArrayAdapter<String> atvArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
                     atv.setAdapter(atvArrayAdapter);
                     atv.setId(Integer.parseInt(customFieldId));
+//                    atv.setBackgroundResource(R.drawable.custom_border);
+                    atv.setPadding(20,20,20,20);
 
                     layout.addView(textView);
                     layout.addView(atv);
@@ -445,6 +461,12 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
         loadingDialog.dismiss();
         Toast.makeText(this, R.string.success_submit, Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    @Override
+    public void errorSubmitEmptyField(String message){
+        loadingDialog.dismiss();
+        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -496,5 +518,10 @@ public class SurveyActivity extends BaseActivity implements SurveyContract {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void showToast(String message){
+        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
     }
 }

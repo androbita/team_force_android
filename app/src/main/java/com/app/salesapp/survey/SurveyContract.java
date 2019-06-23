@@ -30,6 +30,8 @@ public interface SurveyContract {
 
     void successSubmit();
 
+    void errorSubmitEmptyField(String message);
+
     String getProgramId();
 
     String getToken();
@@ -39,5 +41,7 @@ public interface SurveyContract {
     void addTextIntViewInvisible (String label, String customFieldId, String childOf);
 
     void showPhotoButton();
+
+    void showToast(String message);
 
 }
